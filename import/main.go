@@ -4,25 +4,25 @@ import (
 	"flag"
 	"log"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
-	"github.com/maison-inc/spanner-tools/export/internal/api/intdataflow"
+	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow"
 )
 
 var (
 	projectID = flag.String("project_id", "", "your project ID")
-	instanceID = flag.String("instance_id", "", "your Cloud Spanner instance ID to read")
-	databaseID = flag.String("database_id", "", "your Cloud Spanner database ID to read")
-	outputDir = flag.String("output_dir", "", "Cloud Storage path that the Avro files should be exported to")
+	instanceID = flag.String("instance_id", "", "your Cloud Spanner instance ID to write")
+	databaseID = flag.String("database_id", "", "your Cloud Spanner database ID to write")
+	inputDir = flag.String("input_dir", "", "Cloud Storage path that the Avro files should be imported from")
 	location = flag.String("location", "", "the region where you want the Cloud Dataflow job to run (such as us-central1)")
 	serviceAccountEmail = flag.String("service_account_email", "", "Identity to run virtual machines as. Defaults to the default account")
 )
 
-func export(df intdataflow.Client) error {
-	resp, err := df.Export(
+func doImport(df intdataflow.Client) error {
+	resp, err := df.Import(
 		*location,
 		*serviceAccountEmail,
 		*instanceID,
 		*databaseID,
-		*outputDir,
+		*inputDir,
 	)
 	if err != nil {
 		return err
@@ -42,7 +42,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	return export(df)
+	return doImport(df)
 }
 
 func main() {
