@@ -8,6 +8,7 @@ import (
 	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow"
 	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow/dfretrier"
 	"github.com/maison-inc/spanner-tools/import/internal/api/intspndbadmin"
+	"github.com/maison-inc/spanner-tools/import/internal/api/intspndbadmin/spndbadmretrier"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/internal/api/stlspndbadmin"
 )
@@ -65,7 +66,9 @@ func run() error {
 		if err != nil {
 			return err
 		}
-		err = createDatabase(spn)
+		err = createDatabase(
+			spndbadmretrier.NewRetriable(spn, *maxRetries-1),
+		)
 		if err != nil {
 			return err
 		}
