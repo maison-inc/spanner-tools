@@ -60,12 +60,23 @@ func doImport(df intdataflow.Client) error {
 	return nil
 }
 
-func run() error {
+func run() (rerr error) {
 	if !*skipCreate {
 		spn, err := stlspndbadmin.NewClient(*projectID)
 		if err != nil {
 			return err
 		}
+		defer func() {
+			closeErr := spn.Close()
+			if closeErr == nil {
+				return
+			}
+			if rerr == nil {
+				rerr = closeErr
+			}
+			// only output the error, then ignore it.
+			log.Println(closeErr)
+		}()
 		err = createDatabase(
 			spndbadmretrier.NewRetriable(spn, *maxRetries-1),
 		)
