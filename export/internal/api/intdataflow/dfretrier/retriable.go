@@ -4,25 +4,15 @@ import (
 	"context"
 
 	"github.com/lestrrat/go-backoff"
+	"github.com/maison-inc/spanner-tools/export/internal/api/intdataflow"
 	"google.golang.org/api/dataflow/v1b3"
 )
 
-// Retriable represents the API to be subject to retry.
-type Retriable interface {
-	Export(
-		location string,
-		serviceAccountEmail string,
-		instanceID string,
-		databaseID string,
-		outputDir string,
-	) (*dataflow.LaunchTemplateResponse, error)
-}
-
-// NewRetriable creates a new Retriable.
+// NewRetriable creates a new Retriable client.
 func NewRetriable(
-	inner Retriable,
+	inner intdataflow.Client,
 	maxRetries int,
-) Retriable {
+) intdataflow.Client {
 	return &retrier{
 		createPolicy: func() *backoff.Exponential {
 			return backoff.NewExponential(backoff.WithMaxRetries(maxRetries))
@@ -33,7 +23,7 @@ func NewRetriable(
 
 type retrier struct {
 	createPolicy func() *backoff.Exponential
-	inner        Retriable
+	inner        intdataflow.Client
 }
 
 func (r *retrier) Export(

@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/maison-inc/spanner-tools/export/internal/api/intdataflow"
+	"github.com/maison-inc/spanner-tools/export/internal/api/intdataflow/dfretrier"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
-	"github.com/maison-inc/spanner-tools/internal/api/stldataflow/dfretrier"
 )
 
 var (
