@@ -32,12 +32,12 @@ func export(df intdataflow.Client) error {
 		return err
 	}
 
-	marshalled, err := resp.MarshalJSON()
+	marshaled, err := resp.MarshalJSON()
 	if err != nil {
 		return err
 	}
 
-	log.Println(string(marshalled))
+	log.Println(string(marshaled))
 	return nil
 }
 
