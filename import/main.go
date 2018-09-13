@@ -1,21 +1,21 @@
 package main
 
 import (
+	"context"
 	"flag"
-	"log"
-	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow"
 	"github.com/maison-inc/spanner-tools/import/internal/api/intspndbadmin"
-	"context"
+	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/internal/api/stlspndbadmin"
+	"log"
 )
 
 var (
-	projectID = flag.String("project_id", "", "your project ID")
-	instanceID = flag.String("instance_id", "", "your Cloud Spanner instance ID to write")
-	databaseID = flag.String("database_id", "", "your Cloud Spanner database ID to write")
-	inputDir = flag.String("input_dir", "", "Cloud Storage path that the Avro files should be imported from")
-	location = flag.String("location", "", "the region where you want the Cloud Dataflow job to run (such as us-central1)")
+	projectID           = flag.String("project_id", "", "your project ID")
+	instanceID          = flag.String("instance_id", "", "your Cloud Spanner instance ID to write")
+	databaseID          = flag.String("database_id", "", "your Cloud Spanner database ID to write")
+	inputDir            = flag.String("input_dir", "", "Cloud Storage path that the Avro files should be imported from")
+	location            = flag.String("location", "", "the region where you want the Cloud Dataflow job to run (such as us-central1)")
 	serviceAccountEmail = flag.String("service_account_email", "", "identity to run virtual machines as. Defaults to the default account")
 
 	skipCreate = flag.Bool("skip_create_database", false, "skip to create a database before import")

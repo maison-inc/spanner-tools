@@ -1,8 +1,8 @@
 package stldataflow
 
 import (
-	"google.golang.org/api/dataflow/v1b3"
 	"fmt"
+	"google.golang.org/api/dataflow/v1b3"
 )
 
 // Import starts a job to import gcs avro to a spanner database.
@@ -19,12 +19,12 @@ func (c *Client) Import(
 ) {
 	templateSrv := dataflow.NewProjectsLocationsTemplatesService(c.service)
 	call := templateSrv.Launch(c.projectID, location, &dataflow.LaunchTemplateParameters{
-		Environment:     importEnvironment(serviceAccountEmail),
-		JobName:         importJobName(instanceID, databaseID),
-		Parameters:      map[string]string{
+		Environment: importEnvironment(serviceAccountEmail),
+		JobName:     importJobName(instanceID, databaseID),
+		Parameters: map[string]string{
 			"instanceId": instanceID,
 			"databaseId": databaseID,
-			"inputDir": inputDir,
+			"inputDir":   inputDir,
 		},
 	})
 	call = call.GcsPath(`gs://dataflow-templates/2018-08-30-00/GCS_Avro_to_Cloud_Spanner`)
@@ -41,6 +41,6 @@ func importJobName(instanceID, databaseID string) string {
 
 func importEnvironment(serviceAccount string) *dataflow.RuntimeEnvironment {
 	return &dataflow.RuntimeEnvironment{
-		ServiceAccountEmail:     serviceAccount,
+		ServiceAccountEmail: serviceAccount,
 	}
 }

@@ -1,8 +1,8 @@
 package intspndbadmin
 
 import (
-	databasepb "google.golang.org/genproto/googleapis/spanner/admin/database/v1"
 	"context"
+	databasepb "google.golang.org/genproto/googleapis/spanner/admin/database/v1"
 )
 
 // Client represents a spanner admin database client for create.

@@ -1,9 +1,9 @@
 package stlspndbadmin
 
 import (
-	databasepb "google.golang.org/genproto/googleapis/spanner/admin/database/v1"
-	adminpb "google.golang.org/genproto/googleapis/spanner/admin/database/v1"
 	"context"
+	adminpb "google.golang.org/genproto/googleapis/spanner/admin/database/v1"
+	databasepb "google.golang.org/genproto/googleapis/spanner/admin/database/v1"
 )
 
 // Create creates a database.

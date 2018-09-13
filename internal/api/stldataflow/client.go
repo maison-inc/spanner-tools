@@ -9,7 +9,7 @@ import (
 
 // Client represents a dataflow client.
 type Client struct {
-	service *dataflow.Service
+	service   *dataflow.Service
 	projectID string
 }
 
@@ -26,8 +26,7 @@ func NewClient(projectID string) (*Client, error) {
 		return nil, err
 	}
 	return &Client{
-		service: service,
+		service:   service,
 		projectID: projectID,
 	}, nil
 }
-

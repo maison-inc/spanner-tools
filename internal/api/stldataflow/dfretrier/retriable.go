@@ -1,9 +1,9 @@
 package dfretrier
 
 import (
+	"context"
 	"github.com/lestrrat/go-backoff"
 	"google.golang.org/api/dataflow/v1b3"
-	"context"
 )
 
 // Retriable represents the API to be subject to retry.

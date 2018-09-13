@@ -8,7 +8,7 @@ import (
 
 // Client represents a spanner instance admin client.
 type Client struct {
-	admin *spanner.DatabaseAdminClient
+	admin     *spanner.DatabaseAdminClient
 	projectID string
 }
 
