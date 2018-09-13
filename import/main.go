@@ -5,6 +5,9 @@ import (
 	"log"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow"
+	"github.com/maison-inc/spanner-tools/import/internal/api/intspndbadmin"
+	"context"
+	"github.com/maison-inc/spanner-tools/internal/api/stlspndbadmin"
 )
 
 var (
@@ -13,8 +16,24 @@ var (
 	databaseID = flag.String("database_id", "", "your Cloud Spanner database ID to write")
 	inputDir = flag.String("input_dir", "", "Cloud Storage path that the Avro files should be imported from")
 	location = flag.String("location", "", "the region where you want the Cloud Dataflow job to run (such as us-central1)")
-	serviceAccountEmail = flag.String("service_account_email", "", "Identity to run virtual machines as. Defaults to the default account")
+	serviceAccountEmail = flag.String("service_account_email", "", "identity to run virtual machines as. Defaults to the default account")
+
+	skipCreate = flag.Bool("skip_create_database", false, "skip to create a database before import")
 )
+
+func createDatabase(spn intspndbadmin.Client) error {
+	resp, err := spn.Create(
+		context.Background(),
+		*instanceID,
+		*databaseID,
+	)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("database creation done: %s", resp)
+	return nil
+}
 
 func doImport(df intdataflow.Client) error {
 	resp, err := df.Import(
@@ -33,11 +52,22 @@ func doImport(df intdataflow.Client) error {
 		return err
 	}
 
-	log.Println(string(marshalled))
+	log.Printf("import done: %s", string(marshalled))
 	return nil
 }
 
 func run() error {
+	if !*skipCreate {
+		spn, err := stlspndbadmin.NewClient(*projectID)
+		if err != nil {
+			return err
+		}
+		err = createDatabase(spn)
+		if err != nil {
+			return err
+		}
+	}
+
 	df, err := stldataflow.NewClient(*projectID)
 	if err != nil {
 		return err
