@@ -48,6 +48,22 @@
   version = "v2.0.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:667b0c198b1b9c9b94fc55ec903d0b82a12ce0280fc72d87f16650fafce3c806"
+  name = "github.com/lestrrat/go-backoff"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "35e4255e9d947fd262578336d977169268224b8b"
+
+[[projects]]
+  digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
+
+[[projects]]
   digest = "1:1bb914cfb78f68f488a91cd7872d3d06a5f83c5bbacf0296dbef44e120b00a91"
   name = "go.opencensus.io"
   packages = [
@@ -228,8 +244,10 @@
   analyzer-version = 1
   input-imports = [
     "cloud.google.com/go/spanner/admin/database/apiv1",
+    "github.com/lestrrat/go-backoff",
     "golang.org/x/oauth2/google",
     "google.golang.org/api/dataflow/v1b3",
+    "google.golang.org/genproto/googleapis/spanner/admin/database/v1",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
