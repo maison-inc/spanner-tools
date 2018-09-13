@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
+	"log"
+
 	"github.com/maison-inc/spanner-tools/export/internal/api/intdataflow"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow/dfretrier"
-	"log"
 )
 
 var (

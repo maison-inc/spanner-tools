@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"flag"
+	"log"
+
 	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow"
 	"github.com/maison-inc/spanner-tools/import/internal/api/intspndbadmin"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/internal/api/stlspndbadmin"
-	"log"
 )
 
 var (

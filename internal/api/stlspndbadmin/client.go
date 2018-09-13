@@ -1,9 +1,10 @@
 package stlspndbadmin
 
 import (
-	spanner "cloud.google.com/go/spanner/admin/database/apiv1"
 	"context"
 	"fmt"
+
+	spanner "cloud.google.com/go/spanner/admin/database/apiv1"
 )
 
 // Client represents a spanner instance admin client.
