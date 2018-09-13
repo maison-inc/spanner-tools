@@ -5,6 +5,7 @@ import (
 	"log"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/export/internal/api/intdataflow"
+	"github.com/maison-inc/spanner-tools/internal/api/stldataflow/dfretrier"
 )
 
 var (
@@ -14,6 +15,8 @@ var (
 	outputDir = flag.String("output_dir", "", "Cloud Storage path that the Avro files should be exported to")
 	location = flag.String("location", "", "the region where you want the Cloud Dataflow job to run (such as us-central1)")
 	serviceAccountEmail = flag.String("service_account_email", "", "Identity to run virtual machines as. Defaults to the default account")
+
+	maxRetries = flag.Int("max_retries", 3, "retry count to export")
 )
 
 func export(df intdataflow.Client) error {
@@ -42,7 +45,9 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	return export(df)
+	return export(
+		dfretrier.NewRetriable(df, *maxRetries-1),
+	)
 }
 
 func main() {
