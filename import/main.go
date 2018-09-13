@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow"
+	"github.com/maison-inc/spanner-tools/import/internal/api/intdataflow/dfretrier"
 	"github.com/maison-inc/spanner-tools/import/internal/api/intspndbadmin"
 	"github.com/maison-inc/spanner-tools/internal/api/stldataflow"
 	"github.com/maison-inc/spanner-tools/internal/api/stlspndbadmin"
@@ -20,6 +21,7 @@ var (
 	serviceAccountEmail = flag.String("service_account_email", "", "identity to run virtual machines as. Defaults to the default account")
 
 	skipCreate = flag.Bool("skip_create_database", false, "skip to create a database before import")
+	maxRetries = flag.Int("max_retries", 3, "retry count to export")
 )
 
 func createDatabase(spn intspndbadmin.Client) error {
@@ -73,7 +75,9 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	return doImport(df)
+	return doImport(
+		dfretrier.NewRetriable(df, *maxRetries-1),
+	)
 }
 
 func main() {
