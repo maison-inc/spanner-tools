@@ -2,9 +2,16 @@
 
 Assorted spanner-related commands.
 
-## tools
+## Installation
 
-### export
+```
+go get github.com/maison-inc/spanner-tools/export
+go get github.com/maison-inc/spanner-tools/import
+```
+
+## Tools
+
+### Export
 
 ```
 $ go run export/main.go -h
@@ -24,7 +31,7 @@ $ go run export/main.go -h
         Identity to run virtual machines as. Defaults to the default account
 ```
 
-### import
+### Import
 
 ```
 $ go run import/main.go -h
@@ -46,15 +53,15 @@ $ go run import/main.go -h
         skip to create a database before import
 ```
 
-## development
+## Development
 
-### install dependency
+### Install dependency
 
 ```
 _devel/dep ensure -add dependency
 ```
 
-### test
+### Test
 
 ```
 make test/lint
